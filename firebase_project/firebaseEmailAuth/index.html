@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
+    <script src="./assets/scripts/firebaseConfig.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        Account Settings
+    </nav>
+    <main>
+        <section>
+            <div class="profile-container">
+                <img id="profile_img" alt="profile"
+                    src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80">
+            </div>
+        </section>
+        <section class="user-detail">
+            <form id="user_form">
+                <label for="email">email</label>
+                <input type="text" name="email" readonly>
+                <label for="email">display name</label>
+                <input type="text" name="displayName">
+                <label for="email">photo url</label>
+                <input type="text" name="photoURL">
+                <div class="btn-container">
+                    <button class="btn btn-success" type="submit">save</button>
+                    <!-- <button class="btn btn-warning" type="reset">clear</button> -->
+                    <button class="btn btn-info" type="button" id="verified_btn">
+                        verify email
+                    </button>
+                </div>
+            </form>
+            <button class="btn btn-warning" type="button" id="signout_btn">sign out</button>
+        </section>
+    </main>
+</body>
+
+<script>
+    // initialize firebase authentication
+    const firebaseAuth = firebase.auth();
+    // temp user
+    const userData = {
+        email: 'joe16723@gmail.com',
+        password: '1q2w3e4r'
+    }
+    // variable 
+    const myForm = document.querySelector('#user_form');
+    const profileImg = document.querySelector('#profile_img');
+    const verifiedBtn = document.querySelector('#verified_btn');
+    const signoutBtn = document.querySelector('#signout_btn');
+    let currentUser;
+
+    // add event listener
+    myForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // create object
+        let formObject = {};
+        for (const ele of myForm.elements) {
+            if (ele.name) {
+                formObject[ele.name] = ele.value ? ele.value : '';
+            }
+        }
+
+        // update profile
+        updateUser(formObject.displayName, formObject.photoURL);
+    });
+    myForm.addEventListener('reset', (e) => {
+        myForm.reset();
+    })
+
+    verifiedBtn.addEventListener('click', (e) => {
+        sendEmail();
+    })
+
+    signoutBtn.addEventListener('click', () => {
+        onSignOut();
+    })
+    // functions 
+    const updateUser = (displayName, photoURL) => {
+        currentUser.updateProfile({
+            displayName,
+            photoURL
+        }).then((result) => {
+            alert('update success');
+            window.location.reload();
+        }).catch((err) => {
+            alert('update fail');
+        });
+    }
+
+    const sendEmail = () => {
+        currentUser.sendEmailVerification()
+            .then((result) => {
+                console.log('Send success');
+                alert('please verify your email address');
+            }).catch((err) => {
+                console.log('Send fail');
+            });
+    }
+    const onSignOut = () => {
+        firebaseAuth.signOut()
+            .then((result) => {
+                console.log('sign out success');
+                window.location.reload();
+            }).catch((err) => {
+                console.log('sign out fail');
+            });
+    }
+
+    // create user
+    // firebaseAuth.createUserWithEmailAndPassword(userData.email, userData.password)
+    //     .then((result) => {
+    //         console.log({ msg: 'success', result });
+    //     }).catch((err) => {
+    //         console.log({ msg: 'error', err });
+    //     });
+
+    // sign in with exists user
+    // firebaseAuth.signInWithEmailAndPassword(userData.email, userData.password)
+    //     .then((result) => {
+    //         console.log({ msg: 'success', result });
+    //     }).catch((err) => {
+    //         console.log({ msg: 'error', err });
+    //     });
+    // state change listener
+    firebaseAuth.onAuthStateChanged(user => {
+        if (user) {
+            currentUser = user;
+            const userObject = {
+                email: user.email,
+                uid: user.uid,
+                displayName: user.displayName,
+                photoURL: user.photoURL,
+                emailVerified: user.emailVerified
+            }
+            // set form
+            for (const ele of myForm.elements) {
+                ele.value = userObject[ele.name];
+            }
+            // set image
+            if (userObject.photoURL) {
+                profileImg.setAttribute('src', userObject.photoURL);
+            } else {
+                profileImg.setAttribute('src', 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80');
+            }
+            // toggle email verification
+            if (userObject.emailVerified) {
+                verifiedBtn.setAttribute('disabled', true);
+            } else {
+                verifiedBtn.removeAttribute('disabled');
+            }
+            
+        } else {
+            currentUser = null;
+            console.log('anonymous user');
+        }
+    })
+
+</script>
+
+</html>

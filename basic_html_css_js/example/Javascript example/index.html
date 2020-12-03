@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loop example</title>
+    <style>
+        .flex-example {
+            display: flex;
+        }
+
+        @media screen and (max-width: 800px) {
+            .flex-example {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- body -->
+    <h2>calculator logic</h2>
+    <ol>
+        <li>use let or const</li>
+        <li>use operation</li>
+        <li>use comparation</li>
+        <li>use condition</li>
+        <li>use log to display result</li>
+        <li>call function !!</li>
+        <li>multiple operator</li>
+    </ol>
+</body>
+
+<script>
+
+
+    // let globalResult;
+    const eq = '10 + 10 * 2 + 15 / 20';
+    let arr = eq.split(' ');
+    console.log(`equation: ${eq}`);
+    let num1;
+    let num2;
+    let op;
+    let res = 0;
+    let priorityRes = 0;
+    const indexPriority = [];
+    // get index of priority
+    const priority = arr.filter((val, index) => {
+        if (val === '*' || val === '/') {
+            indexPriority.push(index);
+            return val;
+        }
+    });
+
+    // clear prio first and pop out of arr
+    for (let cur of indexPriority) {
+        op = arr[cur];
+        if (num1 === undefined) {
+            // set both val
+            num1 = arr[cur - 1];
+            num2 = arr[cur + 1];
+        } else {
+            // set only second value
+            num2 = arr[cur + 1];
+        }
+        // console.log(num1, op, num2);
+
+        mathHandler(op);
+        // store result
+        priorityRes = num1; 
+    }
+    // clear all value 
+    num1 = undefined;
+    num2 = undefined;
+    op = undefined;
+    res = undefined;
+
+
+    // pop arr
+    const start = indexPriority[0] - 1;
+    const end = indexPriority[indexPriority.length-1];
+    const firstArr = arr.slice(0,start);
+    const secondArr = arr.slice(end+2, arr.length);
+    // console.log('tmp: ' , tmp1, tmp2);
+    firstArr.push(priorityRes);
+    arr = firstArr.concat(secondArr);
+    // console.log(arr);
+
+
+    // then do same logic
+    for (let cur of arr) {
+        console.log(cur);
+        
+        // assign input
+        const input = +cur;
+        // detect operator
+        if (isNaN(input)) {
+            op = cur;
+            continue;
+        }
+        // detect number 
+        else {
+            // if num1 is empty then set num1
+            if (num1 === undefined) {
+                num1 = input;
+            }
+            // set num 2
+            else {
+                num2 = input;
+            }
+        }
+
+        // wait for full condition if false continue
+        if (num1 !== undefined && num2 !== undefined) {
+            // console.log(num1, num2);
+            mathHandler(op);
+        }
+    }
+
+    console.log(`result: ${res}`);
+    console.log(`priority res: ${priorityRes}`);
+    // console.log('final result:' + (res+priorityRes));
+    
+    
+
+
+
+
+    function mathHandler(op) {
+        switch (op) {
+            case '+':
+                res = num1 + num2;
+                break;
+            case '-':
+                res = num1 - num2;
+                break;
+            case '*':
+                res = num1 * num2;
+                break;
+            case '/':
+                res = num1 / num2;
+                break;
+            default:
+                break;
+        }
+        num1 = res;
+    }
+
+    // let x = 9.656;
+    // console.log((100 + 23).toString());
+    // x.toPrecision(1);
+    // console.log(x);
+
+    // console.log(new Date());
+
+
+    // function displayName(name) {
+    //     return 'my name : ' + name;
+    // }
+    // const mathHandler = (num1, num2, op) => {
+    //     // logic code
+    //     return;
+    // }
+    // const displayName = (name) => 'my name : ' + name;
+    // console.log(typeof displayName);
+
+    // let floatNum = 0.32312124214213;
+    // let floatNum2 = 0.42142142141214;
+
+    // let res = (floatNum + floatNum2).toFixed(3);
+
+    // console.log(res);
+
+    // let str = "Please locate where 'locate' occurs!";
+    // let index = str.search('locate');
+    // let sliceStr = str.slice(0, -6);
+    // let subString = str.substring(0, -6);
+    // let replaced = str.replace(/LOCATE/i, 'x');
+    // // console.log(sliceStr);
+    // console.log(replaced);
+    // var text1 = "Hello";
+    // var text2 = "World";
+    // var text3 = "World";
+    // var text4 = "World";
+    // var res = text1.concat(text2, text3, text4);
+
+    // console.log(res);
+
+    // var str = "       Hello World!        ";
+    // console.log(str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, ''));
+
+
+    // console.log(str.length);
+    // str = str.trim();
+    // console.log(str.length);
+
+
+
+
+    // if (case 1) {
+    //     // same logic
+    //     mathHandler(1, 2, '+');
+    // } else if (case 2) {
+    //     // same logic
+    //     mathHandler(1, 2, '-')
+    // } else if (case 3) {
+    //     // same logic
+    //     mathHandler(1, 2, '*')
+    // } else {
+    //     // same logic
+    //     mathHandler(1, 2, '/')
+    // }
+
+    // class example
+    // class User {
+    //     constructor(firstname, lastname, age) {
+    //         this.fname = firstname;
+    //         this.lname = lastname;
+    //         this.age = age;
+    //     }
+
+    //     // method
+    //     fullName() {
+    //         return `my name is: ${this.fname} ${this.lname}`;
+    //     }
+    //     // get firstname() {
+    //     //     return this.fname;
+    //     // }
+    //     // set firstname(value) {
+    //     //     this.fname = value;
+    //     // }
+    // }
+
+    // how to use class
+    // const userDetail = new User('jirot', 'joe', 23);
+    // userDetail.firstname = 'kevinnnn';
+    // console.log(userDetail.firstname);
+
+    // inheritance class
+    // class UserExperience extends User {
+    //     constructor(expName, expLevel, firstname, lastname, age) {
+    //         super(firstname, lastname, age);
+    //         this.expName = expName;
+    //         this.expLevel = expLevel;
+    //     }
+
+    //     // method
+    //     // warning of super !!! if parent class have a value (static class) the value that return will be a value of parent class
+    //     present() {
+    //         return `${super.fullName()} and i have ${this.expName} skill at level ${this.expLevel}`
+    //     }
+    // }
+    // // how to use inheritance class 
+    // const myProfile = new UserExperience('html and css', '3/5', 'jirot', 'joe', 23);
+    // console.log(myProfile.present());
+
+
+    // const myCar = new Car('toyota');
+    // console.log(myCar.present())
+
+    // for loop
+    // let i; // index
+    // for (i = 0; i < 5; i++) {
+    //     if (i === 3) {
+    //         continue;
+    //     }
+    //     console.log(i);
+    // }
+
+    // for in
+    // const user = {
+    //     name: 'jirot joe',
+    //     age: '23',
+    //     location: 'khonkaen',
+    //     work: 'zercle tech.'
+    // }
+
+    // console.log(user['age']);
+
+    // const charactersList = ['B', 'a', 'b', 'e', 'l', 'C', 'o', 'd', 'e', 'r'];
+
+    // for(let props in user) {
+    //     console.log(`${props}` );
+    // }
+
+    // for of
+    // const charactersList = ['B', 'a', 'b', 'e', 'l', 'C', 'o', 'd', 'e', 'r'];
+    // for (let char of charactersList) {
+    //     console.log(char);
+    // }
+    // for (let i = 0; i < charactersList.length; i++) {
+    //     console.log(charactersList[i]);
+    // }
+
+    // for each
+    // const charactersList = ['B', 'a', 'b', 'e', 'l', 'C', 'o', 'd', 'e', 'r'];
+    // (element, index, array) accept at least 1 argument. but can have 3 argruments
+    // charactersList.forEach(function(char,index, array) {
+    //     console.log(`left ${char} right`);
+    // });
+    // beware of this!!!!
+    // https://medium.com/front-end-weekly/3-things-you-didnt-know-about-the-foreach-loop-in-js-ff02cec465b1
+
+    // while loop
+    // const limit = 10;
+    // let i = 0;
+    // while(i < 10) {
+    //   i++;
+    //   console.log(i);
+    // }
+    // do while
+    // let i = 0;
+    // do {
+    //     // console.log(`kevinnnnnnn ! round: ${i}`);
+    //     i++;
+    //     console.log(i);
+    // } while(i < 10);
+
+    // const mf = function () {
+    //     return 'joe';
+    // }
+    // console.log(mf());
+
+    // console.log(typeof mf);
+    // const addNumber = (num1, num2)  => {
+    // 	return num1 + num2;
+    // }
+
+    // function addNumber(num1, num2) {
+    //     return num1 + num2;
+    // }
+    // const displayName = (name) => `my name is : ${name}`;
+    // console.log(displayName('jing joe'));
+
+</script>
+
+</html>

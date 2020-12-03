@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Custom Image Slider</title>
+</head>
+
+<body>
+    <main>
+        <img>
+        <div class="arrow-btns">
+            <button id="prev_btn">&#10094</button>
+            <button id="next_btn">&#10095</button>
+        </div>
+    </main>
+</body>
+
+<script>
+    // variable
+    let index = 0;
+    const imgList = [
+        'https://i.picsum.photos/id/129/3000/1600.jpg',
+        'https://i.picsum.photos/id/130/3000/1600.jpg',
+        'https://i.picsum.photos/id/131/3000/1600.jpg',
+        'https://i.picsum.photos/id/132/3000/1600.jpg',
+    ];
+    const imgSlide = document.querySelector('img');
+    const prevBtn = document.querySelector('#prev_btn');
+    const nextBtn = document.querySelector('#next_btn');
+    // listener
+    prevBtn.addEventListener('click', e => {
+        changeIndex(false);
+    });
+    nextBtn.addEventListener('click', e => {
+        changeIndex(true);
+    })
+    // function
+    const setImg = (index) => {
+        imgSlide.setAttribute('src', imgList[index]);
+        imgSlide.style.display = "block";
+        // imgSlide.style.visibility = 'visible';
+    }
+    const changeIndex = (isIncrement) => {
+        const maxLength = imgList.length;
+        imgSlide.style.display = "none";
+        // imgSlide.style.visibility = 'hidden';
+
+        // increase or decrease
+        if (isIncrement) {
+            index++;
+        } else {
+            index--;
+        }
+        // if value is min or max
+        if (index >= maxLength) {
+            index = 0;
+        } else if (index < 0) {
+            index = maxLength - 1;
+        }
+
+        setTimeout(() => {
+            setImg(index);
+        }, (100));
+    }
+    // logic
+    changeIndex(true);
+</script>
+
+</html>

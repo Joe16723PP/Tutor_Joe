@@ -1,0 +1,47 @@
+body {
+    margin: 0;
+    font-size: 16px;
+    background-color: black;
+    height: 100vh;
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+    background-color: white;
+    animation: rippleEffect 1s linear infinite;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    overflow: hidden;
+}
+
+main {
+    margin: 8em;
+}
+
+.custom-btn {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    background: linear-gradient(to right, #1759FE, #17FEBC);
+    border-radius: 1em;
+    padding: 0.5em 1em;
+    font-size: 1.25em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@keyframes rippleEffect {
+    0%, 100% {
+        width: 0;
+        height: 0;
+    }
+    50% {
+        width: 200px;
+        height: 200px;
+    }
+}

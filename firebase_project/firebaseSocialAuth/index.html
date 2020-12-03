@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
+    <script src="./assets/scripts/firebaseConfig.js"></script>
+    <title>Social Authentication</title>
+</head>
+
+<body>
+
+    <button id="google_btn">sign in with google</button>
+    <button id="facebook_btn">facebook login</button>
+</body>
+
+<script>
+    const googleBtn = document.querySelector('#google_btn');
+    const facebookBtn = document.querySelector('#facebook_btn');
+    const googleProvider = new firebase.auth.GoogleAuthProvider();
+    const facebookProvider = new firebase.auth.FacebookAuthProvider();
+    const firebaseAuth = firebase.auth();
+    // get result
+    firebaseAuth.getRedirectResult()
+        .then((result) => {
+            console.log(result.user);
+        }).catch((err) => {
+            console.log(err.message);
+        });
+
+    // add listener
+    googleBtn.addEventListener('click', () => {
+        googleSignIn();
+    })
+
+    facebookBtn.addEventListener('click', () => {
+        facebookLogin();
+    })
+
+    // function 
+    const googleSignIn = () => {
+        firebaseAuth.signInWithRedirect(googleProvider)
+            .then((result) => {
+                console.log({ msg: 'google auth success', res: result.user });
+            }).catch((err) => {
+                console.log({ msg: 'google auth fail', err: err.message });
+            });
+    }
+
+    const facebookLogin = () => {
+        firebaseAuth.signInWithRedirect(facebookProvider)
+            .then((result) => {
+                console.log({ msg: 'facebook auth success', res: result.user });
+            }).catch((err) => {
+                console.log({ msg: 'facebook auth fail', err: err.message });
+            });
+    }
+
+</script>
+
+</html>

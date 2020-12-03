@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reminder app</title>
+  <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
+  <script src="./assets/scripts/firebaseConfig.js"></script>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <nav>
+    Reminder
+    <!-- <a href="./test.html">go to test</a> -->
+  </nav>
+  <main>
+    <section class="account-container">
+      <section>
+        <div class="profile-container">
+          <img id="profile_img" alt="profile"
+            src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80">
+        </div>
+      </section>
+      <section class="user-detail">
+        <form id="user_form">
+          <label for="email">email</label>
+          <input type="text" name="email" readonly>
+          <label for="email">display name</label>
+          <input type="text" name="displayName">
+          <label for="email">photo url</label>
+          <input type="text" name="photoURL">
+          <div class="btn-container">
+            <button class="btn btn-success" type="submit">save</button>
+            <button class="btn btn-info" type="button" id="verified_btn">
+              verify email
+            </button>
+          </div>
+        </form>
+        <button class="btn btn-warning" type="button" id="signout_btn">sign out</button>
+      </section>
+    </section>
+    <section class="reminder-container">
+      <section>
+        <table>
+          <thead>
+            <tr>
+              <th>date</th>
+              <th>time</th>
+              <th>topic</th>
+              <th>note</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+      <section class="controller">
+        <form id="remind_form">
+          <label for="date">date</label>
+          <input type="date" name="date" id="date">
+          <label for="time">time</label>
+          <input type="time" name="time" id="time">
+          <label for="topic">topic</label>
+          <input type="text" name="topic" id="topic">
+          <label for="note">note</label>
+          <input type="text" name="note" id="note">
+          <button class="btn btn-success" type="submit">submit</button>
+        </form>
+      </section>
+    </section>
+    <section class="auth-modal hide">
+      <div class="modal-container">
+        <div class="app-name">My Reminder</div>
+        <form class="signin-container show">
+          <label for="signinEmail">Email</label>
+          <input type="email" name="signinEmail">
+          <label for="signinPwd">Password</label>
+          <input type="password" name="signinPwd">
+          <div class="auth-btn-container">
+            <button class="btn btn-success" type="submit" style="width: 80%;">Sign in</button>
+          </div>
+        </form>
+        <form class="signup-container hide">
+          <label for="signupEmail">Email</label>
+          <input type="email" name="signupEmail">
+          <label for="signupPwd">Password</label>
+          <input type="password" name="signupPwd">
+          <label for="reSignupPwd">Confirm password</label>
+          <input type="password" name="reSignupPwd">
+          <div class="auth-btn-container">
+            <button class="btn btn-success" type="submit" style="width: 80%;">Sign up</button>
+          </div>
+        </form>
+        <footer>
+          <button class="btn btn-warning" id="google_btn" style="width: 80%;">
+            Sign in with google
+          </button>
+          <button class="btn btn-info" id="facebook_btn" style="width: 80%;">
+            Login to facebook
+          </button>
+          <button class="btn btn-info btn-outline" id="toggle_method">
+            Don't have an account ? sign up here!
+          </button>
+        </footer>
+      </div>
+    </section>
+    <section class="loadding-modal hide">
+      <div class="loading-spinner"></div>
+    </section>
+  </main>
+</body>
+
+<script>
+  // initialize firebase firestore
+  const connector = firebase.firestore();
+  // initialize firebase authentication
+  const firebaseAuth = firebase.auth();
+  // temp user
+  const userData = {
+    email: 'joe16723@gmail.com',
+    password: '1q2w3e4r'
+  }
+  // social provider
+  const googleProvider = new firebase.auth.GoogleAuthProvider();
+  const facebookProvider = new firebase.auth.FacebookAuthProvider();
+  // variables
+  const googleBtn = document.querySelector('#google_btn');
+  const facebookBtn = document.querySelector('#facebook_btn');
+  const remindForm = document.querySelector('#remind_form');
+  const bodyRef = document.querySelector('tbody');
+  const userForm = document.querySelector('#user_form');
+  const profileImg = document.querySelector('#profile_img');
+  const verifiedBtn = document.querySelector('#verified_btn');
+  const signoutBtn = document.querySelector('#signout_btn');
+  const toggleBtn = document.querySelector('#toggle_method');
+  const signinForm = document.querySelector('.signin-container');
+  const signupForm = document.querySelector('.signup-container');
+  const authModal = document.querySelector('.auth-modal');
+  const loadingModal = document.querySelector('.loadding-modal')
+  const tmpImg = 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80';
+  let listRef = connector.collection('list');
+  let currentUser;
+  let isEdit = false;
+  let selectedId = null;
+  let isSignin = true;
+
+  // listeners
+  googleBtn.addEventListener('click', () => {
+    console.log('click google');
+    googleSignIn();
+  })
+
+  facebookBtn.addEventListener('click', () => {
+    console.log('click facebook');
+    facebookLogin();
+  })
+
+  toggleBtn.addEventListener('click', () => {
+    isSignin = !isSignin;
+    if (isSignin) {
+      toggleBtn.innerHTML = `Don't have an account ? sign up here!`;
+      signupForm.classList.replace('show', 'hide');
+      signinForm.classList.replace('hide', 'show');
+    } else {
+      toggleBtn.innerHTML = `Already have an account ? sign in here!`;
+      signupForm.classList.replace('hide', 'show');
+      signinForm.classList.replace('show', 'hide');
+    }
+  });
+
+  signinForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let obj = {};
+    for (const ele of signinForm.elements) {
+      if (ele.name) {
+        obj[ele.name] = ele.value;
+      }
+    }
+    onSignin(obj.signinEmail, obj.signinPwd);
+  })
+
+  signupForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let obj = {};
+    for (const ele of signupForm.elements) {
+      if (ele.name) {
+        obj[ele.name] = ele.value;
+      }
+    }
+    if (obj.reSignupPwd === obj.signupPwd) {
+      onSignUp(obj.signupEmail, obj.signupPwd);
+    } else {
+      alert('password not match!');
+    }
+  })
+
+  remindForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const obj = {}
+    for (const ele of remindForm.elements) {
+      if (ele.name !== "") {
+        obj[ele.name] = ele.value;
+      }
+    }
+    if (isEdit) {
+      listRef.doc(selectedId).update(obj)
+        .then(res => {
+          console.log('update success');
+        }).catch(err => {
+          console.log('update error');
+        })
+    } else {
+      listRef.add(obj)
+        .then((result) => {
+          console.log('add success');
+        }).catch((err) => {
+          console.log('add fail');
+        });
+    }
+    remindForm.reset();
+    for (const ele of remindForm.elements) {
+      ele.removeAttribute('value');
+    }
+    selectedId = null;
+    isEdit = false;
+  });
+
+  userForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // create object
+    let formObject = {};
+    for (const ele of userForm.elements) {
+      if (ele.name) {
+        formObject[ele.name] = ele.value ? ele.value : '';
+      }
+    }
+    // update profile
+    updateUser(formObject.displayName, formObject.photoURL);
+  });
+  userForm.addEventListener('reset', (e) => {
+    userForm.reset();
+  })
+
+  verifiedBtn.addEventListener('click', (e) => {
+    sendEmail();
+  })
+
+  signoutBtn.addEventListener('click', () => {
+    onSignOut();
+  })
+
+  // fucntions
+  const writeBody = (payload, id) => {
+    const tableRow = document.createElement('tr');
+    tableRow.innerHTML = `<td>${payload.date}</td>
+        <td>${payload.time}</td>
+        <td>${payload.topic}</td>
+        <td>${payload.note}</td>`;
+    bodyRef.appendChild(tableRow);
+    tableRow.addEventListener('click', () => {
+      isEdit = true;
+      console.log('edited: ' + id);
+      selectedId = id;
+      for (const ele of remindForm.elements) {
+        ele.setAttribute('value', payload[ele.name]);
+      }
+    })
+  }
+  const setListRefference = (uid) => {
+    listRef = connector.collection(uid);
+  }
+
+  const getRemindList = () => {
+    listRef
+      .orderBy('date')
+      .onSnapshot((val) => {
+        bodyRef.innerHTML = '';
+        val.forEach(response => {
+          // console.log(response.data());
+          writeBody(response.data(), response.id);
+        })
+      })
+  }
+  const updateUser = (displayName, photoURL) => {
+    currentUser.updateProfile({
+      displayName,
+      photoURL
+    }).then((result) => {
+      alert('update success');
+      window.location.reload();
+    }).catch((err) => {
+      alert('update fail');
+    });
+  }
+
+  const sendEmail = () => {
+    currentUser.sendEmailVerification()
+      .then((result) => {
+        console.log('Send success');
+        alert('please verify your email address');
+      }).catch((err) => {
+        console.log('Send fail');
+      });
+  }
+
+  const onSignin = (email, password) => {
+    // sign in with exists user
+    firebaseAuth.signInWithEmailAndPassword(email, password)
+      .then((result) => {
+        console.log({ msg: 'success', result });
+      }).catch((err) => {
+        console.log({ msg: 'error', err });
+      });
+  }
+
+  const onSignUp = (email, password) => {
+    // create user
+    firebaseAuth.createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        console.log({ msg: 'success', result });
+      }).catch((err) => {
+        console.log({ msg: 'error', err });
+      });
+  }
+
+  const googleSignIn = () => {
+    firebaseAuth.signInWithRedirect(googleProvider)
+      .then((result) => {
+        console.log({ msg: 'google auth success', res: result.user });
+      }).catch((err) => {
+        console.log({ msg: 'google auth fail', err: err.message });
+      });
+  }
+
+  const facebookLogin = () => {
+    firebaseAuth.signInWithRedirect(facebookProvider)
+      .then((result) => {
+        console.log({ msg: 'facebook auth success', res: result.user });
+      }).catch((err) => {
+        console.log({ msg: 'facebook auth fail', err: err.message });
+      });
+  }
+
+  const onSignOut = () => {
+    firebaseAuth.signOut()
+      .then((result) => {
+        console.log('sign out success');
+        // window.location.reload();
+      }).catch((err) => {
+        console.log('sign out fail');
+      });
+  }
+  // logic
+
+  // state change listener
+  firebaseAuth.onAuthStateChanged(user => {
+    loadingModal.classList.replace('hide', 'show');
+    if (user) {
+      authModal.classList.replace('show', 'hide');
+      currentUser = user;
+      const userObject = {
+        email: user.email,
+        uid: user.uid,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        emailVerified: user.emailVerified
+      }
+      setListRefference(userObject.uid);
+      getRemindList();
+      // set form
+      for (const ele of userForm.elements) {
+        ele.value = userObject[ele.name];
+      }
+      // set image
+      const imgSrc = userObject.photoURL ? userObject.photoURL : tmpImg;
+      profileImg.setAttribute('src', imgSrc);
+      // toggle email verification
+      if (userObject.emailVerified) {
+        verifiedBtn.setAttribute('disabled', true);
+      } else {
+        verifiedBtn.removeAttribute('disabled');
+      }
+
+    } else {
+      currentUser = null;
+      isEdit = false;
+      selectedId = null;
+      console.log('anonymous user');
+      authModal.classList.replace('hide', 'show');
+    }
+    isLoading = false;
+    setTimeout(() => {
+      loadingModal.classList.replace('show', 'hide');
+    }, 2000);
+  })
+
+</script>
+
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Calculator</title>
+    <link rel="stylesheet" href="/assets/styles/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital@0;1&display=swap" rel="stylesheet">
+    <script src="assets/scripts/handler.js"></script>
+</head>
+
+<body>
+    <button id='myBtn' value="10">8</button>
+    <h1>My Calculator</h1>
+    <input class="custom-input" id="result" type="text" readonly value="">
+    <div class="container">
+        <div class="number-pad">
+            <button class="custom-btn number" value="7">7</button>
+            <button class="custom-btn number" value="8">8</button>
+            <button class="custom-btn number" value="9">9</button>
+            <button class="custom-btn number" value="4">4</button>
+            <button class="custom-btn number" value="5">5</button>
+            <button class="custom-btn number" value="6">6</button>
+            <button class="custom-btn number" value="1">1</button>
+            <button class="custom-btn number" value="2">2</button>
+            <button class="custom-btn number" value="3">3</button>
+            <button class="custom-btn number" value="0">0</button>
+            <button class="custom-btn number" value=".">.</button>
+            <button class="custom-btn number" value="Cancel">C</button>
+        </div>
+        <div class="operator-pad">
+            <button class="custom-btn operator-btn" value="+">+</button>
+            <button class="custom-btn operator-btn" value="-">-</button>
+            <button class="custom-btn operator-btn" value="*">x</button>
+            <button class="custom-btn operator-btn" value="%">%</button>
+            <button class="custom-btn operator-btn" value="=">=</button>
+        </div>
+    </div>
+</body>
+
+<script>
+
+    const myBody = document.querySelector('body');
+    const myRes = document.querySelector('#result');
+    myBody.addEventListener('keypress', (event) => {
+        console.log(event.key);
+        if(event.key === 'a') {
+            // alert('press A');
+            myRes.value = 'set new val with press a';
+        }
+    })
+    
+    const alertMe = () => {
+        console.log('clickkkkk');
+    }
+    let isNumber = true;
+    let calString = '';
+    const myH1 = document.querySelector('h1');
+    // myRes.value = '19863286';
+    console.log(myRes);
+    myRes.value = 'Kevinnnnnnn !!!!!';
+    // myH1.innerHTML = 'Zercle';
+    // const resultEl = document.querySelector('#result');
+    const numBtns = document.querySelectorAll('.number');
+    // console.log(numBtns);
+    // const myBtn = document.querySelector('#myBtn');
+    // // console.log(myBtn);
+    myBtn.addEventListener('click', ((event) => {
+        // block of code
+    }));
+
+    // function myAction(val) {
+    //     console.log(val);
+
+    // }
+
+
+    // function setResult(result) {
+    //     resultEl.value = result;
+    // }
+
+        // numBtns.forEach(function(btn) {
+        //     btn.addEventListener("click", function(event) {
+        //         const value = event.target.value;
+        //         isNumber = true;
+
+        //         if (value === 'Cancel') {
+        //             calString = '';
+        //         } else {
+        //             calString += value;
+        //         }
+        //         setResult(calString);
+        //     });
+        // });
+
+    // const opertorBtns = document.querySelectorAll('.operator-btn');
+
+    // opertorBtns.forEach(function(btn) {
+    //     btn.addEventListener("click", function(event) {
+    //         const value = event.target.value;
+    //         // calculate string
+    //         if (value === '=') {
+    //             const res = eval(calString);
+    //             calString = res;
+    //             setResult(res);
+    //         } 
+    //         // 
+    //         else if (isNumber) {
+    //             calString += value;
+    //             isNumber = false;
+    //             setResult(calString);
+    //         } else {
+    //             let replaceIndex = calString.length - 1;
+    //             calString = calString.substr(0, replaceIndex);
+    //             calString += value;
+    //             setResult(calString);
+    //         }
+
+
+    //     });
+    // });
+
+
+</script>

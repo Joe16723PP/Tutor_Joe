@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8">
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQvDg71vUkwJXXJ8Q68I6D33dbL4kxaNI&language=th"></script>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+        // variables
+        let map;
+        let marker;
+        // functions
+        const initMap = (lat, lng) => {
+            // init google map with current location
+            map = new google.maps.Map(document.getElementById('map'), {
+                // shorthand create object
+                center: { lat, lng },
+                zoom: 15
+            });
+
+            // create pin (marker) 
+            marker = new google.maps.Marker({
+                position: { lat, lng },
+                map: map,
+                title: 'My current location'
+            });
+            // add marker to the map
+            marker.setMap(map);
+
+            // add listeners for google map
+            mapListenerHandler();
+        }
+
+        const mapListenerHandler = () => {
+            // click listener
+            map.addListener('click', function (mapsMouseEvent) {
+                // remove previous marker
+                marker.setMap(null);
+
+                // create pin (marker) 
+                marker = new google.maps.Marker({
+                    position: mapsMouseEvent.latLng,
+                    map: map,
+                    title: 'My current location'
+                });
+                // add marker to the map
+                marker.setMap(map);
+            });
+        }
+        const getLocation = () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                const errMsg = "Geolocation is not supported by this browser.";
+                alert(errMsg);
+            }
+        }
+
+        const showPosition = (position) => {
+            console.log(position.coords);
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            initMap(lat, lng);
+        }
+
+        // logic
+        getLocation();
+    </script>
+</body>
+
+</html>

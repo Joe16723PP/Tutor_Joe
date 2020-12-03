@@ -1,0 +1,183 @@
+body {
+    margin: 0;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    padding: 0 20%;
+    box-sizing: border-box;
+    width: 100vw;
+    height: 5rem;
+    box-shadow: 1px 0 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    background-color: white;
+}
+
+nav>.nav-title {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+nav>.nav-title>i {
+    padding-inline-end: 1rem;
+}
+
+main {
+    padding: 4% 20%;
+}
+
+.upload-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.display-container {
+    padding: 0 3.5rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: flex-start;
+}
+
+.img-container {
+    margin: 0.5rem;
+    width: 240px;
+    height: 240px;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.img-container>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+#add-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #DADADA;
+}
+
+.img-container:hover {
+    cursor: pointer;
+    filter: brightness(0.95);
+}
+
+.img-test-container {
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 2rem;
+}
+
+.img-test-container>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+#modal {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#modal>.modal-bg {
+    position: fixed;
+    width: 100vw;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 0;
+}
+
+#modal > .modal-content {
+    width: 40%;
+    height: 60%;
+    background-color: white;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.25rem;
+    overflow: hidden;
+}
+
+.modal-content > .action-btns {
+    position: fixed;
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.modal-content > .action-btns > button {
+    border: none;
+    outline: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    font-size: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 0.5rem;
+}
+
+.modal-content > .action-btns > button:hover {
+    cursor: pointer;
+    filter: brightness(0.8);
+}
+
+.modal-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.hide {
+    visibility: hidden;
+}
+
+.show {
+    visibility: visible;
+}
+@media only screen and (max-width: 800px) {
+    .display-container {
+        padding: 0;
+        justify-content: center;
+    }
+
+    .img-container {
+        margin: 0.25rem;
+        width: 100px;
+        height: 100px;
+    }
+
+    main {
+        padding: 2% 5%;
+    }
+}

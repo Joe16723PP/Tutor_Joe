@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/d66017a3ca.js" crossorigin="anonymous" async></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>My Gallery</title>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-title">
+            <i class="fas fa-camera-retro fa-2x"></i>
+            My Gallery
+        </div>
+        <!-- <div class="nav-item"></div> -->
+    </nav>
+    <main>
+        <section class="upload-container">
+            <input type="file" style="visibility: hidden;" accept="image/*">
+        </section>
+        <section class="display-container">
+            <div id="add-image" class="img-container">
+                <i class="fas fa-camera fa-4x"></i>
+            </div>
+        </section>
+    </main>
+    <section id="modal" class="hide">
+        <div class="modal-bg"></div>
+        <div class="modal-content">
+            <img class="modal-img">
+            <div class="action-btns">
+                <button id="prev_btn">&#10094</button>
+                <button id="next_btn">&#10095</button>
+            </div>
+        </div>
+    </section>
+    <!-- <footer>
+        <div class="img-test-container">
+            <img src="https://i.picsum.photos/id/250/1920/1080.jpg" alt="img">
+        </div>
+    </footer> -->
+
+</body>
+
+<script>
+    // variables
+    let modalIndex = 0;
+    const url = 'http://localhost:3000/api/images';
+    const public = 'http://localhost:3000/upload/';
+    const addImgBtn = document.querySelector('#add-image');
+    const myFile = document.querySelector('input[type="file"]');
+    const images = document.querySelector('.display-container');
+    const modal = document.querySelector('#modal');
+    const modalBg = document.querySelector('.modal-bg');
+    const modalImg = document.querySelector('.modal-img');
+    const prevBtn = document.querySelector('#prev_btn');
+    const nextBtn = document.querySelector('#next_btn');
+    let imageList = [];
+
+    // function
+    const fetchImg = async () => {
+        const data = await fetch(url);
+        return data.json();
+    }
+    const uploadImg = async (imgForm) => {
+        return await fetch(url, {
+            method: "POST",
+            body: imgForm
+        }).then(res => {
+            return res.json();
+        }).then(data => {
+            return data;
+        }).catch(e => {
+            throw new Error(e);
+        })
+    }
+    const setModalImg = (index) => {
+        const src = public + imageList[index];
+        modalImg.setAttribute('src', src);
+    }
+    const setImageList = (imgList) => {
+        for (const index in imgList) {
+            const src = public + imgList[index];
+            const imgTemplate = document.createElement('div');
+            const imgSrc = document.createElement('img');
+            imgTemplate.className = 'img-container';
+            imgSrc.setAttribute('src', src);
+            imgSrc.setAttribute('alt', src);
+            imgTemplate.appendChild(imgSrc);
+            images.appendChild(imgTemplate);
+            imgTemplate.addEventListener('click', e => {
+                modalIndex = index;
+                modal.setAttribute('class', 'show');
+                setModalImg(modalIndex);
+            })
+        }
+    }
+
+    const changeModalImg = (isIncrement) => {
+        const max = imageList.length;
+        if (isIncrement) {
+            modalIndex++;
+        } else {
+            modalIndex--;
+        }
+
+        if (modalIndex >= max) {
+            modalIndex = 0;
+        } else if (modalIndex < 0) {
+            modalIndex = max - 1;
+        }
+
+        setModalImg(modalIndex);
+    }
+    const initImageList = () => {
+        clearImgList();
+        fetchImg().then(res => {
+            imageList = res;
+            setImageList(imageList);
+
+        }).catch(e => {
+            console.log(e);
+        })
+    }
+
+    const clearImgList = () => {
+        // console.log(images.children);
+        let eleList = [];
+        for (const ele of images.children) {
+            // console.log(ele.id);
+            if (ele.id === '') {
+                // images.removeChilde(ele);
+                eleList.push(ele);
+            }
+        }
+        for (const ele of eleList) {
+            images.removeChild(ele);
+        }
+    }
+
+    // listeners
+    addImgBtn.addEventListener('click', e => {
+        myFile.click();
+    });
+
+    myFile.addEventListener('change', e => {
+        const imgFile = e.target.files[0];
+        const fileData = new FormData();
+        fileData.append('image', imgFile);
+        uploadImg(fileData).then(res => {
+            initImageList();
+
+        }).catch(e => {
+            console.log(e);
+        })
+    });
+
+    modalBg.addEventListener('click', e => {
+        modal.setAttribute('class', 'hide');
+    });
+
+    prevBtn.addEventListener('click', e => {
+        changeModalImg(false);
+    });
+    nextBtn.addEventListener('click', e => {
+        changeModalImg(true);
+    });
+
+    // logics
+    initImageList();
+</script>
+
+</html>

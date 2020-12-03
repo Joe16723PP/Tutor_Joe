@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/styles/style.css">
+    <script src="./assets/scripts/main.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <title>Fetching api</title>
+</head>
+
+<body>
+
+    <h1>My Fetch API Example</h1>
+    <ol>
+        <li>What's api ?</li>
+        <li>How are api working??</li>
+        <li>Deeper with JSON</li>
+        <li>Playing with POKE' API</li>
+        <li>Implement to our website</li>
+    </ol>
+
+    <h2>My favorite pokemon</h2>
+    <ol>
+        <li>Abilities</li>
+        <li>Name</li>
+        <li>Sprites> font-default, back-default(image)</li>
+        <li>types</li>
+        <!-- <li></li> -->
+    </ol>
+</body>
+
+<script>
+
+    // const setName = (name) => {
+    //     console.log(`poke name is: ${name}`);
+    // }
+    
+    const url = 'https://pokeapi.co/api/v2/pokemon/4/';
+    let pokemonData;
+    // promise function
+    fetch(url)
+        // return response
+        .then((response) => {
+            // console.log(response);
+            return response.json();
+        })
+        // return our data
+        .then((data) => {
+            console.log(data);
+            // do with data
+            // setName(pokemonData.name);
+            return pokemonData.name;
+        })
+        // .then((name) => {
+        //     console.log(name);
+        // })
+        // if error ?? how to handle it
+        .catch((error) => {
+            // error agrument is a object
+            console.log(error.message)
+            // block of code
+        });
+    
+    // execute every time unit
+    let i = 0;
+        setInterval(() => {
+            i++;
+            console.log(`${i} second`);
+        }, 1000);
+</script>
+
+</html>

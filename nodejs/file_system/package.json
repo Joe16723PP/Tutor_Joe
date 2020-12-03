@@ -1,0 +1,14 @@
+{
+  "name": "file_system",
+  "version": "1.0.0",
+  "description": "for test file system with json",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon --experimental-modules index.js"
+  },
+  "nodemonConfig": {
+    "ignore": ["database/*"]
+  }
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <p>im working at Zercle technology</p>
+    </main>
+</body>
+
+<script>
+    const myTxt = document.querySelector('p');
+    const myPattern = /zercle technology/g;
+    const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const value = myTxt.innerHTML;
+    // use match find where the input is matched with regexp
+    const res = value.match(myPattern);
+    // use search to return value if input is matched or not
+    const isValid = value.search(myPattern);
+    // use replace to modified input value to the pattern that we defind
+    const newValue = value.replace(myPattern, 'new me');
+    // return by modifier function
+    console.log(res);
+    // return found index or -1
+    console.log(isValid);
+    // return new value of replace if not found return input value
+    console.log(newValue);
+</script>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./assets/scripts/main.js" type="module"></script>
+    <script src="./assets/scripts/fetchingData.js" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="./assets/scripts/chartHndler.js" async></script>
+    <script src="https://kit.fontawesome.com/d66017a3ca.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Muli&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="./assets/styles/card.css">
+    <link rel="stylesheet" href="./assets/styles/style.css">
+    <link rel="stylesheet" href="./assets/styles/selector.css">
+    <link rel="stylesheet" href="./assets/styles/chartContainer.css">
+    <title>Covid 19 tracking</title>
+</head>
+
+<body>
+    <main>
+        <div class="sidebar">
+            <div class="header">
+                <div class="icon">
+                    <i class="fas fa-head-side-mask fa-3x"></i>
+                </div>
+                <div class="display-text">My Covid-19 tracking</div>
+            </div>
+            <div class="link-container">
+                <div class="side-link">
+                    <i class="fas fa-chart-bar fa-2x"></i>
+                    <div class="display-text">Dashboard</div>
+                </div>
+                <div class="side-link">
+                    <i class="fas fa-cog fa-2x"></i>
+                    <div class="display-text">Settings</div>
+                </div>
+                <div class="side-link">
+                    <i class="fas fa-question-circle fa-2x"></i>
+                    <div class="display-text">Help</div>
+                </div>
+                <div class="side-link">
+                    <i class="fas fa-info-circle fa-2x"></i>
+                    <div class="display-text">About us</div>
+                </div>
+            </div>
+        </div>
+        <div class="dashboard">
+            <nav>
+                <!-- <i class="fas fa-adjust fa-5x" style="color: blue;"></i> -->
+                <i class="fas fa-list fa-2x" style="color: white;"></i>
+            </nav>
+
+            <div class="content">
+            </div>
+
+            <hr style="margin: 2em 12em;">
+
+            <div class="history-chart">
+                <select name="selector" id="country_selector">
+                    <option value="null">please select country</option>
+                </select>
+                <div class="card chart-card">
+                    <div class="chart-container">
+                        <canvas id="pie_chart"></canvas>
+                    </div>
+                    <div class="history-container">
+                        <div class="history-header"></div>
+                        <div class="history-detail"></div>
+                    </div>
+                </div>
+                <label for="selected_date">เลือกวันที่ที่ต้องการ</label><br>
+                <input name="selectedDate" id="selected_date" type="date" />
+                <div class="card chart-card">
+                    <div class="chart-container bar_chart">
+                        <canvas id="bar_chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+<script>
+    console.log(new Date().toISOString().slice(0,10));
+</script>
+
+</html>

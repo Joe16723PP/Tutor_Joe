@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RGB Scrollbar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="scrollbar"></div>
+    <div id="scrollbar-bg"></div>
+    <section>
+        <h2>RGB Scrollbar by jirot joe</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, dolore corporis molestias
+            deserunt saepe omnis voluptatibus accusantium placeat, dolores esse explicabo dolor
+            autem. Ab esse consectetur mollitia necessitatibus possimus officia!
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore, d
+            olores unde vitae ipsum laborum, consequuntur magnam et eveniet asperiores
+            eum architecto quidem fugit cupiditate voluptates. Exercitationem accusamus
+            autem optio voluptatum!lo Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Sed rem est nobis, saepe commodi asperiores modi eaque ad tenetur dolorem? Numquam
+            quia, error adipisci qui voluptatibus modi accusantium laborum assumenda?
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus labore
+            maiores dolore, nulla enim expedita consequatur corrupti commodi placeat esse provident
+            aliquid accusamus possimus eaque quos iste omnis incidunt est.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, dolore corporis molestias
+            deserunt saepe omnis voluptatibus accusantium placeat, dolores esse explicabo dolor
+            autem. Ab esse consectetur mollitia necessitatibus possimus officia!
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore, d
+            olores unde vitae ipsum laborum, consequuntur magnam et eveniet asperiores
+            eum architecto quidem fugit cupiditate voluptates. Exercitationem accusamus
+            autem optio voluptatum!lo Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Sed rem est nobis, saepe commodi asperiores modi eaque ad tenetur dolorem? Numquam
+            quia, error adipisci qui voluptatibus modi accusantium laborum assumenda?
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus labore
+            maiores dolore, nulla enim expedita consequatur corrupti commodi placeat esse provident
+            aliquid accusamus possimus eaque quos iste omnis incidunt est.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, dolore corporis molestias
+            deserunt saepe omnis voluptatibus accusantium placeat, dolores esse explicabo dolor
+            autem. Ab esse consectetur mollitia necessitatibus possimus officia!
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore, d
+            olores unde vitae ipsum laborum, consequuntur magnam et eveniet asperiores
+            eum architecto quidem fugit cupiditate voluptates. Exercitationem accusamus
+            autem optio voluptatum!lo Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Sed rem est nobis, saepe commodi asperiores modi eaque ad tenetur dolorem? Numquam
+            quia, error adipisci qui voluptatibus modi accusantium laborum assumenda?
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus labore
+            maiores dolore, nulla enim expedita consequatur corrupti commodi placeat esse provident
+            aliquid accusamus possimus eaque quos iste omnis incidunt est.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, dolore corporis molestias
+            deserunt saepe omnis voluptatibus accusantium placeat, dolores esse explicabo dolor
+            autem. Ab esse consectetur mollitia necessitatibus possimus officia!
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore, d
+            olores unde vitae ipsum laborum, consequuntur magnam et eveniet asperiores
+            eum architecto quidem fugit cupiditate voluptates. Exercitationem accusamus
+            autem optio voluptatum!lo Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Sed rem est nobis, saepe commodi asperiores modi eaque ad tenetur dolorem? Numquam
+            quia, error adipisci qui voluptatibus modi accusantium laborum assumenda?
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus labore
+            maiores dolore, nulla enim expedita consequatur corrupti commodi placeat esse provident
+            aliquid accusamus possimus eaque quos iste omnis incidunt est.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, dolore corporis molestias
+            deserunt saepe omnis voluptatibus accusantium placeat, dolores esse explicabo dolor
+            autem. Ab esse consectetur mollitia necessitatibus possimus officia!
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore, d
+            olores unde vitae ipsum laborum, consequuntur magnam et eveniet asperiores
+            eum architecto quidem fugit cupiditate voluptates. Exercitationem accusamus
+            autem optio voluptatum!lo Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Sed rem est nobis, saepe commodi asperiores modi eaque ad tenetur dolorem? Numquam
+            quia, error adipisci qui voluptatibus modi accusantium laborum assumenda?
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus labore
+            maiores dolore, nulla enim expedita consequatur corrupti commodi placeat esse provident
+            aliquid accusamus possimus eaque quos iste omnis incidunt est.</p>
+    </section>
+    <script>
+        const customScrollbar = document.querySelector('#scrollbar');
+        // total height of our content
+        const totalHeigth = document.body.scrollHeight - window.innerHeight;
+        window.onscroll = () => {
+            // page offset is a current value of position in screen (max value = total height)
+            let scrollbarHeight = (window.pageYOffset / totalHeigth) * 100;
+            // set height of custom scrollbar
+            customScrollbar.style.height = scrollbarHeight + '%';
+        }
+    </script>
+</body>
+
+
+</html>

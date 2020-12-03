@@ -1,0 +1,46 @@
+body {
+    font-size: 16px;
+    margin: 0;
+    /* padding: 5% 10%; */
+}
+
+.red-color {
+    position: relative;
+    background-color: red;
+    width: 100px;
+    height: 100px;
+    /* use animation by name */
+    animation-name: myAnimation;
+    /* display duration time */
+    animation-duration: 4s;
+    /* loop animation */
+    /* animation-iteration-count: 4; */
+    /* delay activation  */
+    /* animation-delay: 2s; */
+}
+
+
+@keyframes myAnimation {
+    0% {
+        /* block css code */
+        background-color: green;
+        opacity: 0.3;
+        position: relative;
+        top: 0;
+        /* left: 0; */
+        /* transform: rotate(20deg); */
+        /* transform: scale(0.7); */
+    }
+    50% {
+        opacity: 0.7;
+        top: calc(100vh - 100px);
+        /* left: calc(100vw - 100px); */
+        background-color: yellow;
+    }
+    100% {
+        /* block css code */
+        /* left: 0; */
+        opacity: 1;
+        top: 0;
+    }
+}

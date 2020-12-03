@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <link rel="stylesheet" href="./fortest/testStyle.css">
+    <title>Document</title>
+    <style>
+        button:hover {
+            transition: 0.2s;
+            transform: scale(1.15);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="scrolling">
+        <div class="item-list">
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+        </div>
+    </div>
+
+
+    <button>click me</button>
+</body>
+
+<script>
+    
+    const input =  'Zercle technology';
+    const tmp = input.split('');
+    const tmpRev = tmp.reverse();
+    let revStr = '';
+
+    for (const iterator of tmpRev) {
+        revStr += iterator;
+    }
+    console.log(revStr);
+
+</script>
+
+</html>

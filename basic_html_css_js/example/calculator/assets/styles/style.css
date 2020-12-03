@@ -1,0 +1,59 @@
+body {
+    font-family: 'PT Sans', sans-serif;
+    padding: 0;
+    margin: 10% 35%;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.number-pad {
+    width: 70%;
+}
+
+.operator-pad {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+
+.custom-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 90%;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: end;
+}
+
+.custom-btn {
+    border: none;
+    padding: 15px 20px;
+    font-size: 22px;
+    width: 120px;
+    border-radius: 5px;
+    margin: 4px;
+}
+
+.operator-btn {
+    font-weight: bold;
+    background-color: #59A9FF;
+    color: white;
+}
+.operator-btn:hover {
+    background-color: #5298E4;
+}
+
+.custom-btn:hover {
+    cursor: pointer;
+}
+
+.number {
+    background-color: #eeee;
+}
+.number:hover {
+    background-color: #e6e6e6;
+}

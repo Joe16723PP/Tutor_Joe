@@ -1,0 +1,116 @@
+body { 
+    font-family: 'Muli', sans-serif;
+    margin: 0;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    /* height: 100vh; */
+    box-sizing: border-box;
+    max-width: 100%;
+    background-color: #f5f5f5;
+}
+
+.dashboard {
+    margin-inline-start: 300px;
+    width: calc(100vw - 300px);
+    /* height: auto; */
+}
+
+.content {
+    margin: 6px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.history-chart {
+    padding: 1em 4.25em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #f5f5f5;
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    background-color: #FF5858;
+    height: 64px;
+    width: 100%;
+    z-index: 1;
+    box-sizing: border-box;
+    padding: 0 24px;
+    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: flex-start;
+    /* justify-items: end; */
+    align-items: center;
+}
+
+.sidebar {
+    /* display: flex; */
+    position: fixed;
+    top: 0;
+    width: 300px;
+    background-color: white;
+    height: 100vh;
+    /* border-right: 1px solid #dddddd; */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar i {
+    color: #5b5b5b;
+}
+
+.sidebar > .header {
+    height: 64px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #dddddd;
+    box-shadow: 1px 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar > .header > .display-text {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0 1.25em;
+}
+
+.sidebar > .link-container {
+    width: 100%;
+    height: calc(100% - 64px);
+}
+
+.sidebar > .link-container > .side-link {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    padding: 2em 1.25em;
+    /* padding: 0.5em; */
+}
+
+.sidebar > .link-container > .side-link > .display-text {
+    padding: 0 1em;
+}
+.sidebar > .link-container > .side-link:hover {
+    cursor: pointer;
+    opacity: 0.7;
+    transition: 0.2s;
+    background-color: #e5e5e5;
+}
+
+#country_selector, #selected_date {
+    border: 1px solid #d5d5d5;
+    border-radius: 0.25em;
+    width: 300px;
+    font-size: 20px;
+    padding: 0.5em 1.25em;
+}
+

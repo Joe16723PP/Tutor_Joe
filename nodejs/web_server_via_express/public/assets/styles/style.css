@@ -1,0 +1,153 @@
+body {
+    margin: 0;
+    padding: 0;
+    /* font-family: 'Open Sans', sans-serif; */
+    font-family: 'Poppins', sans-serif;
+}
+
+nav {
+    height: 77px;
+    width: 100vw;
+    background-color: white;
+    box-shadow: 1px 0 1px rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 0 10%; */
+    /* box-sizing: border-box; */
+}
+
+.cover {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    background-image: url(https://static.wixstatic.com/media/84770f_c981566898344a74980a24102b7dc484~mv2_d_3800_2008_s_2.jpg/v1/fill/w_1903,h_642,al_t,q_85,usm_0.66_1.00_0.01/84770f_c981566898344a74980a24102b7dc484~mv2_d_3800_2008_s_2.webp);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 80vh;
+    width: 100vw;
+}
+.nav-container > .left-panel {
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+
+}
+
+.nav-link.logo-text {
+    font-size: 17px !important;
+    font-weight: bolder;
+    text-transform: uppercase;
+    color: black;
+}
+
+.nav-link.logo-text:hover {
+    background-color: transparent;
+    color: orangered;
+}
+
+.cover > .cover-container {
+    position: absolute;
+    top: 50%; 
+    left: 122px;
+    line-height: 1;
+    transform: translateY(-60%);
+}
+
+.tab-color {
+    width: 141px;
+    height: 30px;
+    background-color: orangered;
+    z-index: 1;
+}
+
+.spacer {
+    height: 80vh;
+}
+
+.nav-link {
+    height: 100%;
+    border: none;
+    width: 149px;
+    background-color: transparent;
+    /* font-size: 16px; */
+    font-weight: bold;
+    /* display: inline-block; */
+     color: #575757;
+}
+.nav-link:hover {
+    cursor: pointer;
+    background-color: black;
+    transition: 0.3s;
+   
+}
+
+.login {
+    font-weight: lighter !important;
+}
+
+.login:hover {
+    background-color: transparent !important;
+    color: orangered;
+}
+
+.donate {
+    background-color: orangered;
+    color: white;
+}
+
+.take-action {
+    background-color: #F3B632;
+    color: white;
+}
+
+.menu {
+    background-color: black;
+    color: white;
+}
+
+.menu:hover {
+    color: orangered;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+}
+
+.content-container {
+    position: fixed;
+    top: 76vh;
+    left: 100px;
+    height: 76px;
+    width: 469px;
+    /* line-height: 1; */
+}
+
+.involved-btn {
+    border: none;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    color: white;
+    font-size: 0.8em;
+    font-weight: bolder;
+    text-transform: uppercase;
+}
+
+.cover-header {
+    font-size: 120px;
+    font-weight: bolder;   
+}
+
+.cover-header > .orange {
+    color: orangered;
+}
+
+.description {
+    width: 353px;
+    color: #575757;
+    line-height: 1.8;
+}

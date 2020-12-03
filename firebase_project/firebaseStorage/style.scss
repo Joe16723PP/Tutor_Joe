@@ -1,0 +1,47 @@
+$default-margin: 0.5rem 1rem;
+
+body {
+    margin: $default-margin;
+}
+
+.storage-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 16px;
+    overflow: hidden;
+    object-fit: cover;
+    object-position: center;
+    margin: 1rem;
+    &:hover {
+        cursor: pointer;
+        filter: brightness(90%);
+    }
+}
+
+.spinner {
+    width: 128px;
+    height: 128px;
+    border: 16px solid rgb(233, 233, 233);
+    border-top: 16px solid yellowgreen;
+    border-radius: 50%;
+    animation-name: spinAnimation;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+.hide {
+    visibility: hidden;
+}
+
+.show {
+    visibility: visible;
+}
+
+@keyframes spinAnimation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

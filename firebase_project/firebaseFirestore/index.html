@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My first web with firebase</title>
+    <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-firestore.js"></script>
+    <script src="./assets/scripts/firebaseConfig.js"></script>
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+
+</body>
+
+<script>
+    // ---------------- initialize firebase firestore
+    const connector = firebase.firestore();
+    const path = 'users';
+    const cityRef = connector.collection('cities');
+    const cities = [
+        {
+            name: 'khonkaen',
+            population: 10000,
+            region: 'northeast'
+        }, {
+            name: 'bangkok',
+            population: 2000000,
+            region: 'center'
+        }, {
+            name: 'chiangmai',
+            population: 500000,
+            region: 'north'
+        }];
+
+    const userData = {
+        name: "jirot joe",
+        email: "joe@email.com",
+        age: 24,
+        tel: '089-9999999'
+    }
+    // ----------------- insert data to firestore
+    // connector.collection(path).add(userData)
+    //     .then(res => {
+    //         console.log({
+    //             msg: 'write data complete',
+    //             res
+    //         });
+    //     })
+    //     .catch(e => {
+    //         console.log({
+    //             msg: 'write data fail',
+    //             err: e
+    //         });
+    //     })
+
+    // ---------------- read data from firestore
+    // connector.collection(path).get()
+    //     .then(response => {
+    //         response.forEach(element => {
+    //             console.log({
+    //                 id: element.id,
+    //                 data: element.data()
+    //             });
+    //         });
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //     })
+
+    // -------------- create document inside the collection
+    // const userObj = {
+    //     name: "edited jirot joe",
+    //     age: 24,
+    //     email: "new_email@email.com",
+    //     tel: '0987654321'
+    // }
+    // connector.collection(path).doc("CEtPtKmXYJgSYJH66xY5")
+    //     .set({
+    //         tel: '0987654321'
+    //     }, {
+    //         merge: true
+    //     })
+    //     .then(res => {
+    //         console.log('====================================');
+    //         console.log('complete');
+    //         console.log('====================================');
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //     })
+
+    // ---------------- delete document
+    // connector.collection(path).doc('CEtPtKmXYJgSYJH66xY5').delete()
+    // .then(res => {
+    //     console.log(res);
+    // })
+    // .catch(err => {
+    //     console.log(err);
+    // })
+    // --------------------- delete field
+    // connector.collection(path).doc('NNnJl51IP2Nq0XoDKFMw').update({
+    //     tel: firebase.firestore.FieldValue.delete()
+    // })
+    // .then(res => {
+    //     console.log(res);
+    // })
+    // .catch(err => {
+    //     console.log(err);
+    // })
+
+    // ------------ create city object
+    // cities.map(value => {
+    //     cityRef.doc(value.name).set(value)
+    //         .then(res => {
+    //             console.log(`write ${value.name} complete`);
+    //         })
+    //         .catch(err => {
+    //             console.log(`write ${value.name} fail`);
+    //         })
+    // })
+
+    // --------- read data in collection
+    // cityRef.get()
+    //     .then(cities => {
+    //         cities.forEach(city => {
+    //             console.log(city.data());
+    //         })
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //     });
+    // ---------- read data in document
+    // cityRef.doc('khonkaen').get()
+    //     .then(city => {
+    //         if (city.exists) {
+    //             console.log(city.data());
+    //         } else {
+    //             console.log('document not found');
+    //         }
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //     })
+
+    // ----------- read data with condition
+    // cityRef
+    //     .where('region', '==', 'center')
+    //     .get()
+    //     .then(response => {
+    //         response.forEach(value => {
+    //             console.log(value.data());
+    //         })
+    //     })
+    //     .catch(err => {
+    //         console.log({ msg: 'read error', err });
+    //     })
+
+    // ----------- read data with multiple condition
+    // cityRef
+    //     .where('population', '>=', 150000)
+    //     .where('region', '==', 'center')
+    //     .limit(2)
+    //     .orderBy('population', 'desc')
+    //     .get()
+    //     .then(response => {
+    //         response.forEach(value => {
+    //             console.log(value.data());
+    //         })
+    //     })
+    //     .catch(err => {
+    //         console.log({ msg: 'read error', err });
+    //     })
+
+    // ----------- listen to value changes
+    // cityRef.doc('khonkaen')
+    //     .onSnapshot(valueChange => {
+    //         console.log(valueChange.data());
+    //     })
+
+</script>
+
+</html>

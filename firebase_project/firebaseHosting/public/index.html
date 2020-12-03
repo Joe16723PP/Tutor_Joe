@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase storage</title>
+  <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-storage.js"></script>
+  <script src="./assets/scripts/firebaseConfig.js"></script>
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+  <input type="file" name="file" id="file" accept="image/*">
+  <div id="file_list"></div>
+  <div class="spinner hide"></div>
+</body>
+
+<script>
+  // initialize firebase storage
+  const connector = firebase.storage();
+  // get root refference
+  const storageRef = connector.ref();
+  // img path to download
+  const imgPath = storageRef.child('images/footer-bg.jpg');
+  // path to upload
+  const uploadPath = 'images/';
+  const imagesRef = storageRef.child(uploadPath);
+
+  // variable 
+  const myFile = document.querySelector('#file');
+  const fileList = document.querySelector('#file_list');
+  const spinner = document.querySelector('.spinner');
+  const onSetImg = (url, path) => {
+    const img = document.createElement('img');
+    img.setAttribute('src', url);
+    img.setAttribute('alt', 'from storage');
+    img.setAttribute('class', 'storage-img');
+    fileList.appendChild(img);
+    // add listener for delete item
+    img.addEventListener('dblclick', () => {
+      // get img refference
+      const deletedImgRef = storageRef.child(path);
+      deletedImgRef.delete()
+        .then((result) => {
+          alert(`delete ${path} success`);
+          onInitImg();
+        }).catch((err) => {
+          alert(`delete ${path} fail`);
+        });
+    })
+  }
+  const onDownloadImg = async (url) => {
+    // ----- download blob from url
+    const response = await fetch(url);
+    // ----- create blob from fetch response
+    const blob = await response.blob();
+    // ----- create object from blob
+    const objUrl = URL.createObjectURL(blob);
+    // ----- download image to pc
+    const link = document.createElement('a');
+    link.setAttribute('href', objUrl);
+    link.setAttribute('download', 'myImg.jpg');
+    link.click();
+  }
+
+  const onUploadImg = (file) => {
+    const path = uploadPath + file.name;
+    const uploadTask = storageRef.child(path).put(file);
+    /* task accept 4 agruments: 
+        - state_changed (string),
+        - file progress function,
+        - error function,
+        - success function
+    */
+    uploadTask.on('state_changed',
+      (snapshot) => {
+        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log(progress);
+      }, (err) => {
+        console.log({ msg: 'upload err', err });
+      }, () => {
+        uploadTask.snapshot.ref.getDownloadURL()
+          .then((url) => {
+            onInitImg();
+          }).catch((err) => {
+            console.log({ msg: 'get url err', err });
+          });
+      })
+  }
+
+  // function initialize image from
+  const onInitImg = () => {
+    fileList.innerHTML = '';
+    onGetImgList();
+  }
+  const getImgUrl = async (path) => {
+    return await storageRef.child(path).getDownloadURL();
+  }
+
+  const onGetImgList = () => {
+    spinner.classList.replace('hide', 'show');
+    // ----- display all file in storage refference
+    imagesRef.listAll()
+      .then((response) => {
+        // console.log(files);
+        spinner.classList.replace('show', 'hide');
+        const files = response.items;
+        files.forEach(file => {
+          getImgUrl(file.fullPath)
+            .then((url) => {
+              onSetImg(url, file.fullPath);
+            }).catch((err) => {
+              console.log(err);
+            });
+        });
+      }).catch((err) => {
+        console.log({ msg: 'cant get files', err });
+
+      });
+  }
+
+  // ----- get file from url
+  imgPath.getDownloadURL()
+    .then((url) => {
+      // ---- set img src
+      // onSetImg(url);
+      // ---- download img
+      // onDownloadImg(url);
+    }).catch((err) => {
+      console.log(err);
+    });
+
+  // ----- upload file to storage
+  // ---- file listener 
+  myFile.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    onUploadImg(file);
+  })
+
+  // at first state
+  onInitImg();
+
+</script>
+
+</html>

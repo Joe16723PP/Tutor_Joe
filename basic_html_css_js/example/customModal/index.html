@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Custom modal with animation</title>
+</head>
+
+<body>
+    <!-- <nav></nav> -->
+    <main>
+        <header>
+            <h2>my custom modal</h2>
+        </header>
+        <section id="main_content">
+            <header>
+                <h4>my main content</h4>
+            </header>
+            <article>
+                some content in main page
+            </article>
+            <footer>
+                <button id="toggle_modal">toggle modal</button>
+            </footer>
+        </section>
+        <section id="modal" class="hide">
+            <div id="modal_bg">
+            </div>
+            <div id="modal_content">
+                <header>
+                    <div id="close_btn">&times</div>
+                </header>
+                <article>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate vero sed, recusandae sint,
+                    suscipit,
+                    possimus cupiditate animi nostrum quibusdam ad hic. Iste est sapiente esse sequi illum, fugit odit
+                    vitae.
+                </article>
+            </div>
+        </section>
+    </main>
+</body>
+
+<script>
+    const toggleBtn = document.querySelector('#toggle_modal');
+    const myModal = document.querySelector('#modal');
+    const modalBg = document.querySelector('#modal_bg');
+    const modalCloseBtn = document.querySelector("#close_btn");
+
+    toggleBtn.addEventListener('click', (e) => {
+        myModal.className = 'show';
+    });
+
+    modalBg.addEventListener('click', (e) => {
+        console.log(e);
+        myModal.className = 'hide';
+    })
+    modalCloseBtn.addEventListener('click', (e) => {
+        console.log(e);
+        myModal.className = 'hide';
+    })
+
+</script>
+
+</html>

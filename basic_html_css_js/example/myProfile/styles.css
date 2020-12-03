@@ -1,0 +1,162 @@
+body {
+    overflow-x: hidden;
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navigator {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    align-items: center;
+    padding: 0 15%;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    box-shadow: 2px 0 4px gray;
+    background-color: white;
+}
+
+.bio {
+    display: flex;
+    width: 50%;
+    height: 400px;
+     background: rgba(44, 44, 44, 0.7); 
+    /* 4 command below to set position absolute to center */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.bio > .bio-item {
+    /* background-color: red; */
+    /* width: 150px; */
+    flex-basis: 150px;
+    flex-grow: 1;
+}
+
+.description {
+    margin: auto;
+    padding: 10px;
+    color: white;
+}
+
+.profile {
+    margin: auto;
+    text-align: center;
+}
+
+.profile-img {
+    border-radius: 50%;
+    width: auto;
+    height: 300px;
+}
+
+.cover-img {
+    background-image: url('https://picsum.photos/id/10/1900/1200.jpg');
+    position: absolute;
+    height: 70%;
+    min-width: calc(100vw);
+    top: 0;
+    z-index: -1;
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat;
+    background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.nav-link {
+    height: 100%;
+    width: 100px;
+    background-color: transparent;
+    padding: 10px;
+    border: none;
+    font-size: 16px;
+}
+.nav-link:visited {
+    border: none;
+}
+.nav-link:hover {
+    transition: 0.2s;
+    background-color: #F1F1F1;
+    cursor: pointer;
+}
+.nav-link:active {
+    border: none;
+}
+.spacer {
+    height: calc(70vh - 64px);
+}
+
+.my-skill {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center; /* set element to center verticel */
+    align-items: center; /* set element to center horizontal */
+}
+
+.skill-container {
+    margin: 0 40px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    justify-items: start;
+}
+
+.my-skill > .skill-container > .my-skill-img {
+    margin: 0 80px;
+    border: 14px solid #F1F1F1;
+    width: 230px;
+    height: 230px;
+    border-radius: 50%;
+    background-position: center; /* Center the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+    box-shadow: 4px 3px 10px gray;
+}
+
+#skill1 {
+    background-image: url('https://picsum.photos/id/102/800/600.jpg');
+}
+
+#skill2 {
+    background-image: url('https://picsum.photos/id/1025/800/600.jpg');
+}
+
+#skill3 {
+    background-image: url('https://picsum.photos/id/1024/800/600.jpg');
+}
+
+.contact {
+    margin: 100px 30%;
+}
+
+.custom-input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.submit-btn {
+    background-color: #17C647;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+}
+
+.submit-btn:hover {
+    transition: 0.2s;
+    background-color: #45a049;
+    
+}

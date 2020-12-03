@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Image preview</title>
+</head>
+<body>
+    <div class="img"></div>
+
+    <input type="file" name="file" id="file">
+</body>
+
+<script>
+    const myFile = document.querySelector('#file');
+    const myImg = document.querySelector('.img');
+    myFile.addEventListener('change', (e) => {
+        console.log(e.target.files);
+        const img = e.target.files[0];
+        const imgUrl = URL.createObjectURL(img);
+        myImg.style.backgroundImage = `url(${imgUrl})`;
+    });
+
+</script>
+</html>

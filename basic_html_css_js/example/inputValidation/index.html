@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Input validation</title>
+</head>
+
+<body>
+    <header>
+        <h3>my input validation</h3>
+    </header>
+    <main>
+    </main>
+</body>
+
+<script>
+    const inputStr = '093-4567899';
+    const regEx = /^0[1-9][0-9]-([0-9]{6,7})$/i;
+    console.log(regEx.test(inputStr));
+</script>
+
+</html>

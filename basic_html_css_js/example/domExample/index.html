@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .example {
+            border: 2px solid grey;
+            padding: 5%;
+        }
+
+        .customBtn {
+            border: none;
+            background-color: red;
+            padding: 10px;
+            font-size: 20px;
+            box-shadow: 2px 2px 6px black;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Dom Example</h1>
+    <div class="example">
+        <button>click me</button>
+    </div>
+</body>
+
+<script>
+    // alert('close my by click okkkkkkk');
+    // confirm('accept me???');
+    const myBody = document.body;
+    // create element
+    const myBtn = document.createElement('button');
+    const container =  document.querySelector('.example');
+    myBtn.innerHTML = 'create by js';
+    // set attr
+    myBtn.setAttribute('class', 'customBtn');
+    myBtn.setAttribute('value', 'kevin');
+    // set some style 
+    myBtn.style.color = 'white';
+    
+    // add ele to parent
+    container.appendChild(myBtn);
+
+    // add event listener
+    myBtn.addEventListener('dblclick', (event) => {
+        console.log(event.target.value);
+        // const myConfirm = confirm('delete this item ?');
+        // if (myConfirm) {
+        //     console.log('delete action');
+        //     container.removeChild(myBtn);
+        // } else {
+        //     console.log('dont touch me dude!');
+        // }
+        // container.removeChild(myBtn);
+    })
+
+    // console.log('remove in 5s');
+    const fiveSec = 5 * 1000;
+    
+    // setTimeout(function, delayedTime)
+    // setTimeout(() => {
+    //     container.removeChild(myBtn);
+    // }, fiveSec);
+
+</script>
+</html>

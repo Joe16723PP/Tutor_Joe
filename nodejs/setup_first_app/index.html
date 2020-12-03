@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="checkbox" name="" id="myCheckBox">
+    <input type="text" name="username">
+</body>
+
+<script>
+    const myCheckBox = document.querySelector('#myCheckBox');
+    const myInput = document.getElementsByName('username');
+    myInput.forEach(element => {
+        console.log(element.value = 'jirot joe');
+    })
+
+    const user = {
+        name: '',
+        age: ''
+    }
+
+    const keyList = ['name', 'age'];
+    for (const key of keyList) {
+        console.log(user[key]);
+    }
+    // setTimeout(() => {
+    //     myInput[0].setAttribute('value', 'jirot joe');
+    // }, 2000);
+</script>
+</html>

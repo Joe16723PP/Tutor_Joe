@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON and WEB Storage</title>
+</head>
+
+<body>
+
+    <input type="text">
+</body>
+
+<script>
+    const myInput = document.querySelector('input');
+    myInput.addEventListener('blur', (event) => {
+        alert(event.target.value);
+    });
+
+    // json example 
+    // const myProfile = {
+    //     name: 'jirot joe',
+    //     email: 'justatest@email.com',
+    //     age: '23'
+    // }
+    // console.log(myProfile);
+    // const response = JSON.stringify(myProfile);
+    // console.log(response);
+    // const myObject = JSON.parse(response);
+    // console.log(myObject);
+    // // cookie example
+    // const today = new Date();
+    // const tomorrow = new Date(today);
+    // tomorrow.setDate(tomorrow.getDate() + 1);
+    // const username = 'jirot_joe';
+    // const email = 'test@email.com';
+    // date must be UTC format
+    // by default cookie will delete itself when the exp time has come
+    // const storingData = `email=${email}; expires=${tomorrow.toUTCString()}; path=/`;
+    // document.cookie = storingData;
+    // read all cookie
+    // console.log(document.cookie);
+    // const myCookie = document.cookie.split('=');
+    // // console.log(myCookie);
+    // const cookieName = myCookie[0];
+    // const cookieValue = myCookie[1];
+
+    // const getKey = (name) => {
+    //     const myCookies = document.cookie.split(';');
+    //     for (const cookie of myCookies) {
+    //         const data = cookie.split('=');
+    //         // console.log(data);
+    //         if (data[0].trim() === name) {
+    //             return data[1];
+    //         }
+    //     }
+    // }
+
+    // console.log(getKey('email'));
+
+    const username = 'jirot_joe';
+    const email = 'justatest@email.com';
+    // // sessionstorage example
+    // sessionStorage.setItem('username', username);
+    // sessionStorage.setItem('email', email);
+
+    // const storageUser = sessionStorage.getItem('username');
+    // console.log(storageUser);
+    // console.log(localStorage);
+    // //localstorage example
+    // localStorage.setItem('username', username);
+    // localStorage.setItem('email', email);
+    // const localData = localStorage.getItem('username');
+    // console.log(localData);
+    // // what's difference between local and session ??
+
+    // // get storage by key
+    // // remove storage
+    // localStorage.removeItem('username');
+    // for (let i = 0; i < 10; i++) {
+    //     sessionStorage.setItem(i, `test ${i}`);
+    // }
+
+    // // clear all value in storage
+    // localStorage.clear();
+    // sessionStorage.clear();
+
+    // // working with json
+    const userData = {
+        username: 'jirot_joe',
+        email: 'testagainna@email.com',
+        age: '23',
+        location: 'khonkaen',
+        country: 'thailand'
+    }
+    // localStorage.setItem('userData', JSON.stringify(userData));
+
+    const myJson = JSON.parse(localStorage.getItem('userData'));
+    // console.log(myJson);
+    // const user = 'jirot_joe';
+    // if (myJson.username === user) {
+    //     alert('is admin !!');
+    // } else {
+    //     alert('cant reach this page');
+    // }
+    // console.log('joe');
+</script>
+
+</html>

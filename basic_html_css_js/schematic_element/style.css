@@ -1,0 +1,52 @@
+body {
+    margin: 0;
+    background-color: #fafafa;
+    font-size: 16px;
+}
+.top-bar {
+    display: flex;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 64px;
+    background-color: white;
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    font-size: 1rem;
+}
+
+nav > ul {
+    list-style: none;
+    display: flex;
+    margin: auto;
+}
+
+nav > ul > li:not(:last-child) {
+    margin-inline-end: 16px;
+    /* font-size: 0.2em; */
+}
+
+nav > ul > li > a {
+    font-size: 0.2em;
+}
+
+nav i.fa {
+    font-size: 1.5rem;
+}
+
+.page-container {
+    width: 100%;
+    max-height: 960px;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.card {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+    margin: 1rem 0;
+    border: none;
+}

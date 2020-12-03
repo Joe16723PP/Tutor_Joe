@@ -1,0 +1,41 @@
+body {
+    margin: 5% 10%;
+    font-size: 16px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+form > button {
+    border: none;
+    border-radius: 0.25em;
+    background-color: #B3ED80 ;
+    color: white;
+    padding: 0.25em 0.75em;
+}
+
+form > button:hover {
+    cursor: pointer;
+    filter: brightness(0.95);
+}
+
+
+.invalid {
+    border: 1px solid red; 
+}
+
+.err-hint {
+    font-size: 0.5em;
+    color: red;
+}
+
+form > input {
+    margin: 0.25em 0;
+    padding: 0.25em 0.75em;
+    /* border: none; */
+    border: 1px solid #e7e7e7;
+    border-radius: 0.5em;
+}

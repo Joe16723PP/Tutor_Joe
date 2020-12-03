@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Check List App</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="assets/styles/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <h3>My check list app</h3>
+    <form id="userForm">
+        <label for="username">Name</label>
+        <input type="text" name="username" id="username" placeholder="enter your name"
+            pattern="^([a-zA-Zก-ฮเ-ไ]{2,})+([\s]{1}[a-zA-Zก-๏]+[.]?)?([\s]{1}?[a-zA-Zก-ฮเ-ไ]{2,})+$" required>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="enter your email address" required
+            pattern="^([a-zA-Z]){2}([a-zA-Z_.0-9])?([_.]?[a-zA-Z0-9])*@([a-zA-Z]{2,12})([.]{1}[a-zA-Z]{2,4})?([.]{1}[a-zA-Z]{2,4})$">
+        <label for="chkDate">Checked date</label>
+        <input type="date" name="chkDate" id="chkDate" required>
+
+        <div class="asset-container">
+            <input type="radio" id="male" name="gender" value="male" checked>
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="gender" value="female">
+            <label for="female">Female</label>
+        </div>
+        <div class="text-title">choose your favorite pet</div>
+        <div class="err-fav-msg hide">
+            please select at least one of them
+        </div>
+        <div class="asset-container">
+            <input type="checkbox" id="doggo" name="fav-pet" value="doggo">
+            <label for="doggo">Doggo</label>
+            <input type="checkbox" id="catto" name="fav-pet" value="catto">
+            <label for="catto">Catto</label>
+            <input type="checkbox" id="duckko" name="fav-pet" value="duckko">
+            <label for="duckko">Duckko</label>
+        </div>
+        <div class="btn-container">
+            <button class='custom-btn submit' type="submit" id="submit_btn">add</button>
+            <button class='custom-btn update' type="button" id="upd_btn">update</button>
+        </div>
+    </form>
+    <div class="text-title">Display table</div>
+    <table>
+        <thead>
+            <tr>
+                <td>name</td>
+                <td>email</td>
+                <td>check in date</td>
+                <td>gender</td>
+                <td>my lovely pet</td>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+    <div class="err-container"></div>
+</body>
+
+<script>
+    const url = 'http://localhost:3000/users';
+    // select element
+    const myForm = document.querySelector('form');
+    const errContainer = document.querySelector('.err-container');
+    const myBody = document.body;
+    const submitBtn = document.querySelector('#submit_btn');
+    const updateBtn = document.querySelector('#upd_btn');
+    const myTable = document.querySelector('table>tbody');
+    const emailInput = document.querySelector('#email');
+    const nameInput = document.querySelector('#username');
+    const errFav = document.querySelector('.err-fav-msg');
+    console.log(errFav);
+    const checkBoxes = document.querySelectorAll('input[type="checkbox"]');
+    const nameRegEx = /^([a-zA-Zก-ฮเ-ไ]{2,})+([\s]{1}[a-zA-Zก-๏]+[.]?)?([\s]{1}?[a-zA-Zก-ฮเ-ไ]{2,})+$/;
+    const emailRegEx = /^([a-zA-Z]){2}([a-zA-Z_.0-9])?([_.]?[a-zA-Z0-9])*@([a-zA-Z]{2,12})([.]{1}[a-zA-Z]{2,4})?([.]{1}[a-zA-Z]{2,4})$/;
+    let groupData;
+    let isUpdate = false;
+    // get list of input 
+    const myEls = myForm.elements;
+
+    const fetchUsers = async () => {
+        const response = await fetch(url);
+        return response.json();
+    }
+
+    const updateUsers = async (userData) => {
+        const options = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userData)
+        }
+        const response = await fetch(`${url}/${userData.email}`, options);
+        return response.json();
+    }
+    const writeUser = async (userData) => {
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userData)
+        }
+        const response = await fetch(url, options);
+        return response.json();
+    }
+
+    const getUserByEmail = async (email) => {
+        const newUrl = `${url}/${email}`;
+        console.log('in get user');
+        console.log(newUrl);
+        const res = await fetch(newUrl);
+        return res.json();
+    }
+
+    const deleteUser = async (email) => {
+        const options = {
+            method: "DELETE"
+        }
+        const response = await fetch(`${url}/${email}`, options);
+        return response.json();
+    }
+
+    const setDatatable = () => {
+        fetchUsers().then((data) => {
+            errContainer.innerHTML = '';
+            // clear old data table
+            myTable.innerHTML = '';
+            for (const user of data) {
+                addToTable(user);
+            }
+        }).catch((e) => {
+            setErr(e.message);
+        })
+
+    }
+
+    const enableActionBtns = (isUpdate) => {
+        if (isUpdate) {
+            emailInput.setAttribute('disabled', true);
+            submitBtn.setAttribute('disabled', true);
+            updateBtn.removeAttribute('disabled');
+        } else {
+            updateBtn.setAttribute('disabled', true);
+            submitBtn.removeAttribute('disabled');
+            emailInput.removeAttribute('disabled');
+        }
+    }
+
+    const isCheckboxValid = () => {
+        let isValid = false;
+        for (const element of checkBoxes) {
+            if (element.checked) {
+                isValid = element.checked;
+                break;
+            }
+        }
+        return isValid;
+    }
+    const setInvalidForm = () => {
+        for (const ele of myEls) {
+            // console.log(ele);
+            ele.addEventListener('invalid', e => {
+                ele.setAttribute('class', 'invalid');
+            });
+            ele.addEventListener('focus', e => {
+                ele.classList.remove('invalid');
+            })
+        }
+    }
+    const setErr = (msg) => {
+        const errMsg = document.createElement('h4');
+        // errMsg.style.color = 'red';
+        errMsg.innerHTML = msg;
+        errContainer.appendChild(errMsg);
+    }
+    // set initail data 
+    setDatatable();
+    // set enable action btn
+    enableActionBtns(isUpdate);
+
+    // add logic here
+    setInvalidForm();
+    // emailInput.pattern = emailRegEx;
+    // nameInput.pattern = nameRegEx;
+    myForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (isCheckboxValid()) {
+            console.log('pass');
+            // clear data
+            groupData = {};
+            // filter input name
+            setGroup();
+            writeUser(groupData).then(res => {
+                setDatatable();
+                clearInput();
+                errFav.classList.remove('show');
+                errFav.classList.add('hide');
+            }).catch((e) => {
+                setErr(e.message);
+            });
+        } else {
+            console.log('not pass');
+            errFav.classList.remove('hide');
+            setTimeout(() => {
+                errFav.classList.add('show');
+            }, 200);
+        }
+    });
+    // submitBtn.addEventListener('click', () => {
+    //     // clear data
+    //     groupData = {};
+    //     // filter input name
+    //     setGroup();
+    //     writeUser(groupData).then(res => {
+    //         setDatatable();
+    //         clearInput();
+    //     }).catch((e) => {
+    //         setErr(e.message);
+    //     });
+    // });
+
+
+    updateBtn.addEventListener('click', () => {
+        // clear data
+        groupData = {}
+        setGroup();
+        // console.log(myEls);
+        updateUsers(groupData).then(res => {
+            setDatatable();
+            clearInput();
+            isUpdate = false;
+            enableActionBtns(isUpdate);
+        }).catch((e) => {
+            setErr(e.message);
+        });
+    })
+
+    const setGroup = () => {
+        console.log(groupData);
+        for (const el of myEls) {
+            // console.log(el);
+            const elName = el.getAttribute('name');
+            // console.log(el.checked);
+            if ((elName === 'gender' || elName === 'fav-pet')
+                && el.checked
+            ) {
+                if (!groupData[elName]) {
+                    console.log(elName);
+                    groupData[elName] = el.value;
+                } else {
+                    groupData[elName] += ` ${el.value}`;
+                }
+            }
+            else if (elName !== 'gender' && el.type !== 'button' && elName !== 'fav-pet') {
+                groupData[elName] = el.value;
+            }
+        }
+    }
+
+    const addToTable = (gData) => {
+        // global myTable selected table>tbody
+        const root = document.createElement('tr');
+        root.setAttribute('id', gData['email']);
+        for (const key in gData) {
+            // if (gData.hasOwnProperty(key)) {
+            const td = document.createElement('td');
+            td.innerHTML = gData[key];
+            root.appendChild(td);
+            // }
+        }
+        myTable.appendChild(root);
+        root.addEventListener('click', (event) => {
+            isUpdate = true;
+            enableActionBtns(isUpdate);
+            clearInput();
+            const email = event.path[1].id;
+            getUserByEmail(email).then(res => {
+                for (const el of myEls) {
+                    const elName = el.getAttribute('name');
+                    if (elName === 'gender') {
+                        const gender = res['gender'];
+                        if (gender === 'male') {
+                            document.querySelector('#male').checked = true;
+                        } else {
+                            document.querySelector('#female').checked = true;
+                        }
+                    } else if (elName === 'fav-pet') {
+                        const favArr = res['fav-pet'].split(' ');
+                        for (const favItem of favArr) {
+                            document.querySelector(`#${favItem}`).checked = true;
+                        }
+                    } else if (elName !== 'gender' && el.type !== 'button') {
+                        el.value = res[elName];
+                    }
+                }
+            })
+        })
+        root.addEventListener('dblclick', (event) => {
+            const email = event.path[1].id;
+            // console.log(event.path[1].id);
+            const cf = confirm('Are you sure ????');
+            if (cf) {
+                // myTable.removeChild(root);
+                deleteUser(email).then(res => {
+                    setDatatable();
+                });
+            } else {
+                console.log('no actions');
+            }
+        });
+    }
+
+    const clearInput = () => {
+        myForm.reset();
+    }
+</script>
+
+</html>

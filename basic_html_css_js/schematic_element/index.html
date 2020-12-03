@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>schematic element</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/d66017a3ca.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- <h1>schematic element</h1> -->
+    <header class="top-bar">
+        <span>logo</span>
+        <nav>
+            <ul>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-home"></i>
+                        home
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-users"></i>
+                        about
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-question"></i>
+                        help
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <!-- <div class="container"></div> -->
+    <!-- should have only one main tag -->
+    <main class="page-container">
+        <header>
+            <h1>schematic elelment</h1>
+        </header>
+        <section class="card">
+            <header>
+                <h2>section header</h2>
+            </header>
+            <article>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, reprehenderit deserunt odio iste
+                harum
+                commodi illum laboriosam cupiditate exercitationem atque laborum nam itaque? Tenetur officiis voluptatum
+                sit
+                maxime debitis possimus?
+            </article>
+            <footer>
+                section footer
+            </footer>
+        </section>
+        <section class="card">
+            <header>
+                <h2>section 2 header</h2>
+            </header>
+            <article>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, reprehenderit deserunt odio iste
+                harum
+                commodi illum laboriosam cupiditate exercitationem atque laborum nam itaque? Tenetur officiis voluptatum
+                sit
+                maxime debitis possimus?
+            </article>
+            <footer>
+                section 2 footer
+            </footer>
+        </section>
+    </main>
+    <footer>
+
+        <input type="text" name="tel" id="tel">
+
+    </footer>
+</body>
+
+<script>
+    const myTel = document.querySelector('#tel');
+    // console.log(myTel);
+    myTel.addEventListener('keyup', (e) => {
+        let newValue = e.target.value;
+        let key = e.key;
+        console.log(e.key);
+        // console.log(newValue);
+        // check length
+        if (newValue.length === 2 && key !== 'Backspace') {
+            newValue += '-';
+        }
+        if (newValue.length > 11) {
+            console.log('max length');
+            myTel.value = newValue.slice(0, 11);
+            return;
+        } else {
+            myTel.value = newValue;
+        }
+
+        // set new value
+        // myTel.setAttribute('value', newValue);
+        // console.log(e.target);
+    })
+</script>
+
+</html>
